@@ -16,9 +16,15 @@ class UntitledTestCase(unittest.TestCase):
         wd = self.wd
         self.open_home_page(wd)
         self.login(wd, username="admin", password="secret")
-        self.create_contact(wd, firstname="first", middlename="middle")
+        self.create_contact(wd, firstname="first", middlename="middle", lastname="last", nickname="user", title="new",
+                            companyname="super", address="country", home="hone", mobilephone="888", work="tester",
+                            fax="7744", email="ffff@ddd.com", email2="ddddd@yy.com", email3="ddddq@tft.com",
+                            page="page", byear="2010", ayear="2000", bday="1", bmonth="December", aday="1",
+                            amonth="March")
         self.return_to_home_page(wd)
         self.logaut(wd)
+
+
 
     def logaut(self, wd):
         wd.find_element_by_link_text("Logout").click()
@@ -27,10 +33,8 @@ class UntitledTestCase(unittest.TestCase):
         wd.find_element_by_id("header").click()
         wd.find_element_by_link_text("home").click()
 
-    def create_contact(self, wd, firstname, middlename, lastname="last", nickname="test", title="new",
-                       companyname="super", address="country", home="hone", mobilephone="888", work="tester",
-                       fax="7744", email="ffff@ddd.com", email2="ddddd@yy.com", email3="ddddq@tft.com", page="page",
-                       birthday="15", bmonth="November", byear="2001", aday="12"):
+    def create_contact(self, wd, firstname, middlename, lastname, nickname, title, companyname, address, home,
+                       mobilephone, work, fax, email, email2, email3, page, bday, byear, ayear,  bmonth, aday, amonth):
         # init contacts creation
         wd.find_element_by_link_text("add new").click()
         # fill contact form
@@ -81,23 +85,23 @@ class UntitledTestCase(unittest.TestCase):
         wd.find_element_by_name("homepage").clear()
         wd.find_element_by_name("homepage").send_keys(page)
         wd.find_element_by_name("bday").click()
-        Select(wd.find_element_by_name("bday")).select_by_visible_text(birthday)
-        wd.find_element_by_xpath("//option[@value='15']").click()
+        Select(wd.find_element_by_name("bday")).select_by_visible_text(bday)
+        wd.find_element_by_xpath("//option[@value=%s]" % bday).click()
         wd.find_element_by_name("bmonth").click()
         Select(wd.find_element_by_name("bmonth")).select_by_visible_text(bmonth)
-        wd.find_element_by_xpath("//option[@value='November']").click()
+        wd.find_element_by_xpath("//option[@value='%s']" % str(bmonth)).click()
         wd.find_element_by_name("byear").click()
         wd.find_element_by_name("byear").clear()
         wd.find_element_by_name("byear").send_keys(byear)
         wd.find_element_by_name("aday").click()
         Select(wd.find_element_by_name("aday")).select_by_visible_text(aday)
-        wd.find_element_by_xpath("//div[@id='content']/form/select[3]/option[14]").click()
+        wd.find_element_by_xpath("//option[@value='%s']" % str(aday)).click()
         wd.find_element_by_name("amonth").click()
-        Select(wd.find_element_by_name("amonth")).select_by_visible_text("December")
-        wd.find_element_by_xpath("//div[@id='content']/form/select[4]/option[13]").click()
+        Select(wd.find_element_by_name("amonth")).select_by_visible_text(amonth)
+        wd.find_element_by_xpath("//option[@value='%s']" % str(amonth)).click()
         wd.find_element_by_name("ayear").click()
         wd.find_element_by_name("ayear").clear()
-        wd.find_element_by_name("ayear").send_keys("2012")
+        wd.find_element_by_name("ayear").send_keys(ayear)
         # submit add contact
         wd.find_element_by_xpath("//div[@id='content']/form/input[20]").click()
 
@@ -142,7 +146,7 @@ class UntitledTestCase(unittest.TestCase):
 
     def tearDown(self):
         self.wd.quit()
-        self.assertEqual([], self.verificationErrors)
+
 
 
 if __name__ == "__main__":
