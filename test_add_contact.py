@@ -15,14 +15,12 @@ class UntitledTestCase(unittest.TestCase):
 
     def test_add_contact(self):
         wd = self.wd
-        self.open_home_page(wd)
         self.login(wd, username="admin", password="secret")
         self.create_contact(wd,Contact( firstname="first", middlename="middle", lastname="last", nickname="user", title="new",
                             companyname="super", address="country", home="hone", mobilephone="888", work="tester",
                             fax="7744", email="ffff@ddd.com", email2="ddddd@yy.com", email3="ddddq@tft.com",
                             page="page", byear="2010", ayear="2000", bday="1", bmonth="December", aday="1",
                             amonth="March"))
-        self.return_to_home_page(wd)
         self.logaut(wd)
 
 
@@ -104,10 +102,12 @@ class UntitledTestCase(unittest.TestCase):
         wd.find_element_by_name("ayear").send_keys(contact.ayear)
         # submit add contact
         wd.find_element_by_xpath("//div[@id='content']/form/input[20]").click()
+        self.return_to_home_page(wd)
 
 
 
     def login(self, wd, username, password):
+        self.open_home_page(wd)
         wd.find_element_by_name("user").clear()
         wd.find_element_by_name("user").send_keys(username)
         wd.find_element_by_name("pass").click()
