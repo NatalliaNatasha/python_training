@@ -10,7 +10,7 @@ def app(request):
     return fixture
 
 def test_add_contact(app):
-     app.login( username="admin", password="secret")
+     app.session.login( username="admin", password="secret")
      app.create_contact(Contact( firstname="first", middlename="middle", lastname="last", nickname="user", title="new",
                             companyname="super", address="country", home="hone", mobilephone="888", work="tester",
                             fax="7744", email="ffff@ddd.com", email2="ddddd@yy.com", email3="ddddq@tft.com",
