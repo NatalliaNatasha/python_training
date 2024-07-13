@@ -10,9 +10,7 @@ class CreationContact:
         wd.get("https://localhost/addressbook/")
 
     def create_contact(self, contact):
-        # init contacts creation
-        wd = self.app.wd
-        wd.find_element_by_link_text("add new").click()
+        wd = self.open_contact_page()
         # fill contact form
         wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
@@ -82,7 +80,19 @@ class CreationContact:
         wd.find_element_by_xpath("//div[@id='content']/form/input[20]").click()
         self.return_to_home_page()
 
+    def open_contact_page(self):
+        wd = self.app.wd
+        wd.find_element_by_link_text("add new").click()
+        return wd
+
     def return_to_home_page(self):
         wd = self.app.wd
         wd.find_element_by_id("header").click()
         wd.find_element_by_link_text("home").click()
+
+    def delete_first_contact(self):
+        wd = self.app.wd
+        wd.find_element_by_name("selected[]").click()
+        wd.find_element_by_value("Delete").click()
+
+
