@@ -40,6 +40,22 @@ class CreationGroup:
         wd.find_element_by_name("delete").click()
         self.return_to_group_page()
 
+    def init_edit_first_group(self):
+        wd = self.app.wd
+        wd.find_element_by_name("selected[]").click()
+        wd.find_element_by_xpath("//input[@value='Edit group']").click()
+
+
+    def fill_edited_group(self,group):
+        wd = self.app.wd
+        wd.find_element_by_name("group_name").click()
+        wd.find_element_by_name("group_name").clear()
+        wd.find_element_by_name("group_name").send_keys(group.name)
+        wd.find_element_by_name("update").click()
+
+
+
+
 
 
 
