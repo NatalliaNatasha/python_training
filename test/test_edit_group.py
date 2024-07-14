@@ -1,6 +1,6 @@
 from model.group import Group
 
-def edit_group(app):
+def test_edit_group(app):
     app.session.login(username="admin", password="secret")
     app.group_creation.open_groups_page()
     app.group_creation.init_edit_first_group()
