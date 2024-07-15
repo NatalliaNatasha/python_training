@@ -1,5 +1,6 @@
 from selenium.webdriver.support.ui import Select
 
+
 class CreationContact:
     def __init__(self,app):
         self.app = app
@@ -94,5 +95,28 @@ class CreationContact:
         wd = self.app.wd
         wd.find_element_by_name("selected[]").click()
         wd.find_element_by_xpath("//input[@value='Delete']").click()
+        wd.find_element_by_name("homepage").clear()
+
+    def select_edit_button(self,number):
+        wd = self.app.wd
+        wd.find_element_by_xpath("//a[@href='edit.php?id=%s']" % str(number)).click()
+
+
+    def edit_contact_form(self,contactedit):
+        wd = self.app.wd
+        wd.find_element_by_name("firstname").click()
+        wd.find_element_by_name("firstname").clear()
+        wd.find_element_by_name("lastname").send_keys(contactedit.firstname)
+        wd.find_element_by_name("lastname").click()
+        wd.find_element_by_name("lastname").clear()
+        wd.find_element_by_name("lastname").send_keys(contactedit.lastname)
+        wd.find_element_by_name("amonth").click()
+        Select(wd.find_element_by_name("amonth")).select_by_visible_text(contactedit.amonth)
+        wd.find_element_by_xpath("//option[@value='%s']" % str(contactedit.amonth)).click()
+        wd.find_element_by_name("update").click()
+
+
+
+
 
 
