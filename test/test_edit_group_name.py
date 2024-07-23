@@ -1,9 +1,11 @@
-from model.group_edit import Groupedit
+from model.group import Group
 
-def test_add_group(app):
+def test_modify_first_group_name(app):
     app.session.login(username="admin", password="secret")
-    app.group_creation.open_groups_page()
-    app.group_creation.init_edit_first_group()
-    app.group_creation.fill_edited_group(Groupedit(name=" again"))
-    app.group_creation.submit_group_edit()
+    app.group_creation.modify_first_group(Group(name="again"))
+    app.session.logout()
+
+def test_modify_first_group_header(app):
+    app.session.login(username="admin", password="secret")
+    app.group_creation.modify_first_group(Group(header="best"))
     app.session.logout()
