@@ -77,9 +77,9 @@ class CreationContact:
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         #wd.find_element_by_link_text("home").click()
 
-    def select_edit_button(self,number):
+    def select_edit_button(self):
         wd = self.app.wd
-        wd.find_element_by_xpath("//a[@href='edit.php?id=%s']" % str(number)).click()
+        wd.find_element_by_xpath("//img[@alt='Edit']").click()
 
 
     def update_contact(self):
