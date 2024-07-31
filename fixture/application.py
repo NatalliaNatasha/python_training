@@ -6,7 +6,7 @@ from fixture.contact_creation import CreationContact
 class Application:
     def __init__(self):
         self.wd = webdriver.Firefox()
-        self.wd.implicitly_wait(60)
+        self.wd.implicitly_wait(3)
         self.session=SessionHelper(self)
         self.group_creation=CreationGroup(self)
         self.contact_creation = CreationContact(self)
