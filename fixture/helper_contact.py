@@ -1,7 +1,7 @@
 from selenium.webdriver.support.ui import Select
 
 
-class CreationContact:
+class HelperContact:
     def __init__(self,app):
         self.app = app
 

@@ -1,15 +1,15 @@
 from selenium import webdriver
 from fixture.session import SessionHelper
-from fixture.group_creation import CreationGroup
-from fixture.contact_creation import CreationContact
+from fixture.helper_group import HelperGroup
+from fixture.helper_contact import HelperContact
 
 class Application:
     def __init__(self):
         self.wd = webdriver.Firefox()
         self.wd.implicitly_wait(3)
         self.session=SessionHelper(self)
-        self.group_creation=CreationGroup(self)
-        self.contact_creation = CreationContact(self)
+        self.helper_group=HelperGroup(self)
+        self.helper_contact = HelperContact(self)
 
     def is_valid(self):
         try:
