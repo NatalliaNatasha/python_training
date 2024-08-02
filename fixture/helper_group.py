@@ -4,7 +4,8 @@ class HelperGroup:
 
     def open_groups_page(self):
         wd = self.app.wd
-        wd.find_element_by_link_text("groups").click()
+        if not(wd.current_url.endswith("/group.php") and len(wd.find_elements_by_name("new")))>0:
+            wd.find_element_by_link_text("groups").click()
 
 
     def init_group_creation(self):
@@ -31,13 +32,13 @@ class HelperGroup:
     def submit_group_creation(self):
        wd = self.app.wd
        wd.find_element_by_name("submit").click()
-       self.return_to_group_page()
+       self.open_groups_page()
 
 
     def submit_group_edit(self):
        wd = self.app.wd
        wd.find_element_by_name("update").click()
-       self.return_to_group_page()
+       self.open_groups_page()
 
 
     def return_to_group_page(self):
@@ -49,7 +50,7 @@ class HelperGroup:
         self.open_groups_page()
         self.select_first_group()
         wd.find_element_by_name("delete").click()
-        self.return_to_group_page()
+        self.open_groups_page()
 
     def select_first_group(self):
         wd = self.app.wd

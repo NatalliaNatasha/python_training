@@ -8,7 +8,8 @@ class HelperContact:
 
     def open_home_page(self):
         wd = self.app.wd
-        wd.get("https://localhost/addressbook/")
+        if not (wd.current_url.endswith("https://localhost/addressbook/") and len(wd.find_elements_by_name("Send e-Mail"))) > 0:
+            wd.get("https://localhost/addressbook/")
 
     def create_contact(self, contact):
         wd = self.app.wd
@@ -19,7 +20,7 @@ class HelperContact:
     def submit_add_contact(self):
         wd = self.app.wd
         wd.find_element_by_xpath("//div[@id='content']/form/input[20]").click()
-        self.return_to_home_page()
+        self.open_home_page()
 
     def type(self, field_name, text):
         wd = self.app.wd
