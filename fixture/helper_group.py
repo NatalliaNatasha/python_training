@@ -50,9 +50,17 @@ class HelperGroup:
         wd.find_element_by_link_text("group page").click()
 
     def delete_first_group(self):
+        self.delete_group_by_index(0)
+
+    def select_group_by_index(self,index):
+        wd = self.app.wd
+        wd.find_elements_by_name("selected[]")[index].click()
+
+
+    def delete_group_by_index(self,index):
         wd = self.app.wd
         self.open_groups_page()
-        self.select_first_group()
+        self.select_group_by_index(index)
         wd.find_element_by_name("delete").click()
         self.open_groups_page()
         self.group_cache = None
@@ -62,9 +70,24 @@ class HelperGroup:
         wd.find_element_by_name("selected[]").click()
 
     def init_edit_first_group(self):
+        self.modify_group_by_index(0)
+
+
+    def modify_group_by_index(self,index, group):
         wd = self.app.wd
+        self.select_group_by_index(index)
+        self.click_edit_group()
+        wd.find_element_by_name("group_name").click()
+        wd.find_element_by_name("group_name").clear()
+        wd.find_element_by_name("group_name").send_keys(group.name)
+        wd.find_element_by_link_text("groups").click()
         self.select_first_group()
         self.click_edit_group()
+        self.fill_group_form(group)
+        self.submit_group_edit()
+        self.open_groups_page()
+
+
 
     def click_edit_group(self):
         wd = self.app.wd
