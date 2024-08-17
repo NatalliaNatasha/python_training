@@ -1,5 +1,8 @@
 from selenium.webdriver.support.ui import Select
 from model.contact import Contact
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
 
 class HelperContact:
     def __init__(self,app):
@@ -89,14 +92,16 @@ class HelperContact:
         self.contact_cache = None
         #wd.find_element_by_link_text("home").click()
 
-    def select_edit_button(self):
+    def select_edit_button(self,index):
         wd = self.app.wd
-        wd.find_element_by_xpath("//img[@alt='Edit']").click()
+        wd.find_element_by_xpath("//img[@alt='Edit']")[index].click()
 
     def modify_contact_by_index(self,index):
         wd = self.app.wd
-        self.select_contact_by_index(index)
-        wd.find_element_by_xpath("//img[@alt='Edit']").click()
+        #self.select_contact_by_index(index)
+        #wd.find_element_by_xpath("//img[@alt='Edit']").click()
+        wd.find_elements_by_xpath("//img[@alt='Edit']")[index].click()
+
 
 
     def update_contact(self):
@@ -120,11 +125,14 @@ class HelperContact:
             wd = self.app.wd
             self.go_to_home_page()
             self.contact_cache=[]
-            for element in wd.find_elements_by_css_selector("tr[name='entry']"):
-                text = element.text
-                id = element.find_element_by_name("selected[]").get_attribute("value")
-                self.contact_cache.append(Contact(firstname=text, id=id))
+            for e in wd.find_elements_by_css_selector("tr[name='entry']"):
+                td_value=e.find_element_by_xpath('./td[3]')
+                td = td_value.text
+                id = e.find_element_by_name("selected[]").get_attribute("value")
+                self.contact_cache.append(Contact(firstname=td,id=id))
         return list(self.contact_cache)
+
+
 
 
 

@@ -6,7 +6,7 @@ from fixture.helper_contact import HelperContact
 class Application:
     def __init__(self):
         self.wd = webdriver.Firefox()
-        self.wd.implicitly_wait(3)
+        self.wd.implicitly_wait(5)
         self.session=SessionHelper(self)
         self.helper_group=HelperGroup(self)
         self.helper_contact = HelperContact(self)

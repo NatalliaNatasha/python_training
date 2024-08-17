@@ -8,7 +8,7 @@ def test_edit_group(app):
         app.helper_group.submit_group_creation()
     old_groups = app.helper_group.get_group_list()
     index = randrange(len(old_groups))
-    group = Group(name="edit", footer="group")
+    group = Group(name="edit")
     group.id = old_groups[index].id
     app.helper_group.modify_group_by_index(index,group)
     new_groups = app.helper_group.get_group_list()
