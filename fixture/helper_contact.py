@@ -1,8 +1,7 @@
 from selenium.webdriver.support.ui import Select
 from model.contact import Contact
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.by import By
+import re
+
 
 class HelperContact:
     def __init__(self,app):
@@ -120,17 +119,78 @@ class HelperContact:
 
     contact_cache = None
 
+    # def get_contact_list(self):
+    #     if self.contact_cache is None:
+    #         wd = self.app.wd
+    #         self.go_to_home_page()
+    #         self.contact_cache=[]
+    #         for e in wd.find_elements_by_css_selector("tr[name='entry']"):
+    #             td_value=e.find_element_by_xpath('./td[3]')
+    #             td = td_value.text
+    #             id = e.find_element_by_name("selected[]").get_attribute("value")
+    #             self.contact_cache.append(Contact(firstname=td,id=id))
+    #     return list(self.contact_cache)
+
+
     def get_contact_list(self):
         if self.contact_cache is None:
             wd = self.app.wd
             self.go_to_home_page()
             self.contact_cache=[]
-            for e in wd.find_elements_by_css_selector("tr[name='entry']"):
-                td_value=e.find_element_by_xpath('./td[3]')
-                td = td_value.text
-                id = e.find_element_by_name("selected[]").get_attribute("value")
-                self.contact_cache.append(Contact(firstname=td,id=id))
+            for row in wd.find_elements_by_name("entry"):
+                cells=row.find_elements_by_tag_name("td")
+                firstname = cells[2].text
+                lastname= cells[1].text
+                id = cells[0].find_element_by_tag_name("input").get_attribute("value")
+                #split a string into a list(берется текст и делится)
+                all_phones=cells[5].text.splitlines()
+                self.contact_cache.append(Contact(firstname=firstname,lastname=lastname,id=id,home=all_phones[0],mobilephone=all_phones[1],work=all_phones[2]))
         return list(self.contact_cache)
+
+    def open_contact_to_edit_by_index(self, index):
+        wd = self.app.wd
+        self.go_to_home_page()
+        row = wd.find_elements_by_name("entry")[index]
+        cell = row.find_elements_by_tag_name("td")[7]
+        cell.find_element_by_tag_name("a").click()
+
+    def open_contact_view_by_index(self,index):
+           wd = self.app.wd
+           self.go_to_home_page()
+           row=wd.find_elements_by_name("entry")[index]
+           cell=row.find_elements_by_tag_name("td")[6]
+           cell.find_element_by_tag_name("a").click()
+
+    def get_contact_info_from_edit_page(self,index):
+           wd = self.app.wd
+           self.open_contact_to_edit_by_index(index)
+           firstname = wd.find_element_by_name("firstname").get_attribute("value")
+           lastname = wd.find_element_by_name("lastname").get_attribute("value")
+           id = wd.find_element_by_name("id").get_attribute("value")
+           home=wd.find_element_by_name("home").get_attribute("value")
+           work = wd.find_element_by_name("work").get_attribute("value")
+           mobilephone = wd.find_element_by_name("mobile").get_attribute("value")
+           return Contact(firstname=firstname, lastname=lastname,id=id,home=home,mobilephone=mobilephone,work=work)
+
+
+    def get_contact_from_view_page(self,index):
+        wd = self.app.wd
+        self.open_contact_view_by_index(index)
+        text=wd.find_element_by_id("content").text
+        home=re.search("H: (.*)", text).group(1)
+        mobilephone = re.search("M: (.*)", text).group(1)
+        work=re.search("W: (.*)", text).group(1)
+        return Contact(home=home, mobilephone=mobilephone,
+                    work=work)
+
+
+
+
+
+
+
+
+
 
 
 
