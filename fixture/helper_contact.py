@@ -1,6 +1,7 @@
 from selenium.webdriver.support.ui import Select
 from model.contact import Contact
 import re
+import random
 
 
 class HelperContact:
@@ -51,18 +52,20 @@ class HelperContact:
         self.type("email2",contact.email2)
         self.type("email3",contact.email3)
         self.type("homepage",contact.page)
-        self.find_specific_element("bday", contact.bday)
-        self.find_specific_element("bmonth",contact.bmonth)
+        self.find_specific_element("bday")
+        self.find_specific_element("bmonth")
         self.type("byear",contact.byear)
-        self.find_specific_element("aday",contact.aday)
-        self.find_specific_element("amonth",contact.amonth)
+        self.find_specific_element("aday")
+        self.find_specific_element("amonth")
         self.type("ayear",contact.ayear)
 
-    def find_specific_element(self,name,text):
+    def find_specific_element(self,text):
         wd = self.app.wd
         if text is not None:
-            wd.find_element_by_name(name).click()
-            wd.find_element_by_xpath("//option[@value='%s']" % str (text)).click()
+            text=wd.find_elements_by_xpath("//option")
+            random_option = random.choice(text)
+            random_option.click()
+    #         #wd.find_element_by_xpath("//option[@value='%s']" % str (text)).click()
 
 
     def open_contact_page(self):
@@ -187,9 +190,12 @@ class HelperContact:
         wd = self.app.wd
         self.open_contact_view_by_index(index)
         text=wd.find_element_by_id("content").text
-        home=re.search("H: (.*)", text).group(1)
-        mobilephone = re.search("M: (.*)", text).group(1)
-        work=re.search("W: (.*)", text).group(1)
+        home=re.search("H: (.*)", text)
+        mobilephone = re.search("M: (.*)", text)
+        work=re.search("W: (.*)", text)
+        home = home.group(1) if home else ""
+        mobilephone = mobilephone.group(1) if mobilephone else ""
+        work = work.group(1) if work else ""
         return Contact(home=home, mobilephone=mobilephone,
                     work=work)
 
