@@ -31,6 +31,9 @@ def stop(request):
     request.addfinalizer(fin)
     return fixture
 
+#pytest_addoption(parser):
+#special hook that pytest will look for when it starts up. It takes a parser argument, which is used to add options to the pytest command line
+
 def pytest_addoption(parser):
     parser.addoption("--browser", action="store",default="firefox")
     parser.addoption("--target", action="store", default="target.json")

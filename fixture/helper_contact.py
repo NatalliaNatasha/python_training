@@ -11,8 +11,10 @@ class HelperContact:
 
     def open_home_page(self):
         wd = self.app.wd
-        if not (wd.current_url.endswith("https://localhost/addressbook/") and len(wd.find_elements_by_name("Send e-Mail"))) > 0:
-            wd.get("https://localhost/addressbook/")
+        #доступ к адресу,используя Application
+        base_url = self.app.baseUrl
+        if not (wd.current_url.endswith("/addressbook/") and len(wd.find_elements_by_name("Send e-Mail"))) > 0:
+            wd.get(base_url)
 
     def create_contact(self, contact):
         wd = self.app.wd
@@ -65,7 +67,7 @@ class HelperContact:
             text=wd.find_elements_by_xpath("//option")
             random_option = random.choice(text)
             random_option.click()
-    #         #wd.find_element_by_xpath("//option[@value='%s']" % str (text)).click()
+
 
 
     def open_contact_page(self):
@@ -92,7 +94,7 @@ class HelperContact:
         wd.find_element_by_name("selected[]").click()
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         self.contact_cache = None
-        #wd.find_element_by_link_text("home").click()
+
 
     def select_edit_button(self,index):
         wd = self.app.wd
@@ -100,8 +102,6 @@ class HelperContact:
 
     def modify_contact_by_index(self,index):
         wd = self.app.wd
-        #self.select_contact_by_index(index)
-        #wd.find_element_by_xpath("//img[@alt='Edit']").click()
         wd.find_elements_by_xpath("//img[@alt='Edit']")[index].click()
 
 
