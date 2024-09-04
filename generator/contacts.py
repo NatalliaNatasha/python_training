@@ -1,7 +1,28 @@
-# -*- coding: utf-8 -*-
+import json
+
 from model.contact import Contact
 import random
 import string
+import os.path
+import jsonpickle
+import getopt
+import sys
+
+
+try:
+    opts,args=getopt.getopt(sys.argv[1:], "n:f:",["number of contacts","file"])
+except getopt.GetoptError as err:
+    getopt.usage()
+    sys.exit(2)
+
+n=3
+f="data/contacts.json"
+
+for o,a in opts:
+    if o =="-n":
+        n=int(a)
+    elif o=="-f":
+        f=a
 
 
 def random_string(prefix,maxlen):
@@ -21,15 +42,13 @@ testdata=[Contact(firstname="", middlename="", lastname="",nickname="",title="",
              byear=random_string("byear",4),ayear=random_string("ayear",4)
 
              )
-     for i in range(1)
+     for i in range(n)
     ]
 
+file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..",f)
 
-def test_add_contact(app,json_contacts):
-    contact=json_contacts
-    old_contacts =app.helper_contact.get_contact_list()
-    app.helper_contact.create_contact(contact)
-    new_contacts = app.helper_contact.get_contact_list()
-    assert len(old_contacts) + 1 == len(new_contacts)
-    old_contacts.append(contact)
-    assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max)
+with open(file,"w") as out:
+    jsonpickle.set_encoder_options("json", indent=2)
+    out.write(jsonpickle.encode(testdata))
+
+
