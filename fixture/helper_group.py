@@ -30,7 +30,6 @@ class HelperGroup:
         self.change_field("group_footer", group.footer)
 
 
-
     def submit_group_creation(self):
        wd = self.app.wd
        wd.find_element_by_name("submit").click()
@@ -65,6 +64,20 @@ class HelperGroup:
         self.open_groups_page()
         self.group_cache = None
 
+    def delete_group_by_id(self,id):
+        wd = self.app.wd
+        self.open_groups_page()
+        self.select_group_by_id(id)
+        wd.find_element_by_name("delete").click()
+        self.open_groups_page()
+        self.group_cache = None
+
+    def select_group_by_id(self,id ):
+        wd = self.app.wd
+        wd.find_element_by_css_selector("input[value='%s']" % id).click()
+
+
+
     def select_first_group(self):
         wd = self.app.wd
         wd.find_element_by_name("selected[]").click()
@@ -83,6 +96,15 @@ class HelperGroup:
         # wd.find_element_by_link_text("groups").click()
         # self.select_first_group()
         # self.click_edit_group()
+        self.fill_group_form(group)
+        self.submit_group_edit()
+        self.open_groups_page()
+
+
+    def modify_group_by_id(self,id, group):
+        wd = self.app.wd
+        self.select_group_by_id(id)
+        self.click_edit_group()
         self.fill_group_form(group)
         self.submit_group_edit()
         self.open_groups_page()

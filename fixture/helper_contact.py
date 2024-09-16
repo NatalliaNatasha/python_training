@@ -89,9 +89,22 @@ class HelperContact:
         wd.find_elements_by_name("selected[]")[index].click()
 
 
+    def select_contact_by_id(self,id):
+        wd = self.app.wd
+        wd.find_element_by_css_selector("input[value='%s']" % id).click()
+
+
+
     def delete_contact_by_index(self,index):
         wd = self.app.wd
         wd.find_element_by_name("selected[]").click()
+        wd.find_element_by_xpath("//input[@value='Delete']").click()
+        self.contact_cache = None
+
+
+    def delete_contact_by_id(self,id):
+        wd = self.app.wd
+        self.select_contact_by_id(id)
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         self.contact_cache = None
 
@@ -100,9 +113,19 @@ class HelperContact:
         wd = self.app.wd
         wd.find_element_by_xpath("//img[@alt='Edit']")[index].click()
 
+
+    def select_edit_button_by_id(self,id):
+        wd = self.app.wd
+        wd.find_element_by_xpath("//img[@alt='Edit']")[id].click()
+
+
     def modify_contact_by_index(self,index):
         wd = self.app.wd
         wd.find_elements_by_xpath("//img[@alt='Edit']")[index].click()
+
+    def modify_contact_by_id(self,id):
+        wd = self.app.wd
+        wd.find_element_by_css_selector("a[href='edit.php?id=%s']" % id).click()
 
 
 
