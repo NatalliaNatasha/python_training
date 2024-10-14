@@ -6,6 +6,7 @@ import jsonpickle
 import os.path
 import importlib
 from fixture.db import Dbfixture
+from fixture.orm import ORMFixture
 
 
 fixture = None

@@ -30,7 +30,7 @@ class Dbfixture:
         cursor=self.connection.cursor()
         try:
             cursor.execute("select id,firstname,middlename,lastname,nickname,title,company,address,home,homepage,"
-                           "mobile,work,fax,email,email2,email3,bday,byear,ayear,bmonth,aday,amonth from addressbook")
+                           "mobile,work,fax,email,email2,email3,bday,byear,ayear,bmonth,aday,amonth from addressbook ")
             for row in cursor:
                 (id,firstname,middlename,lastname,nickname,title,company,address,home,
                  homepage,mobile,work,fax,email,email2,email3,bday,byear,ayear,bmonth,aday,amonth)=row
@@ -38,9 +38,35 @@ class Dbfixture:
                                     middlename=middlename,lastname=lastname,nickname=nickname,title=title,companyname=company,
                                     address=address,home=home,page=homepage,mobilephone=mobile,work=work,fax=fax,email=email,email2=email2,
                                     email3=email3,bday=bday,byear=byear,ayear=ayear,bmonth=bmonth,aday=aday,amonth=amonth))
+
         finally:
             cursor.close()
         return list
+
+
+    # def get_contacts_in_group(self):
+    #      list = []
+    #      cursor = self.connection.cursor()
+    #      try:
+    #          cursor.execute("select domain_id,id,group_id,created,modified,deprecated from address_in_groups")
+    #          for row in cursor:
+    #               (domain_id,id,group_id,created,modified,deprecated
+    #               ) = row
+    #               list.append(Contact(id=str(id), firstname=firstname,
+    #                                     middlename=middlename, lastname=lastname, nickname=nickname, title=title,
+    #                                     companyname=company,
+    #                                     address=address, home=home, page=homepage, mobilephone=mobile, work=work,
+    #                                     fax=fax, email=email, email2=email2,
+    #                                     email3=email3, bday=bday, byear=byear, ayear=ayear, bmonth=bmonth, aday=aday,
+    #                                     amonth=amonth))
+    #
+    #      finally:
+    #         cursor.close()
+    #      return list
+
+
+
+
 
 
 
