@@ -60,6 +60,7 @@ class HelperContact:
         self.find_specific_element("aday")
         self.find_specific_element("amonth")
         self.type("ayear",contact.ayear)
+        self.find_specific_element("new_group")
 
     def find_specific_element(self,text):
         wd = self.app.wd
@@ -221,6 +222,21 @@ class HelperContact:
         work = work.group(1) if work else ""
         return Contact(home=home, mobilephone=mobilephone,
                     work=work)
+
+    def add_contact_in_group(self,id,group_id):
+        wd = self.app.wd
+        self.select_contact_by_id(id)
+        wd.find_element_by_xpath("//select[@name='to_group']/option[@value='%s']" % group_id).click()
+        wd.find_element_by_xpath("//input[@type='submit'][@name='add'][@value='Add to']").click()
+        self.return_to_home_page()
+
+
+    def delete_contact_on_selected_group_page(self,id, group_id,group_name):
+        wd = self.app.wd
+        wd.find_element_by_xpath("//select[@name='group'][@onchange='this.parentNode.submit()']/option[@value='%s']" % group_id).click()
+        wd.find_element_by_xpath("//*[@id='%s']" % id).click()
+        wd.find_element_by_xpath("//input[@type='submit'][@name='remove'][@value='Remove from \"%s\"']" % group_name).click()
+        self.return_to_home_page()
 
 
 

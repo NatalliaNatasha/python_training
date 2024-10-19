@@ -3,6 +3,7 @@ from datetime import datetime
 from model.group import Group
 from model.contact import Contact
 from pymysql.converters import decoders
+from pony.orm import db_session
 
 class ORMFixture:
 
@@ -64,6 +65,7 @@ class ORMFixture:
         return self.convert_contacts_to_model(select(c for c in ORMFixture.ORMContact if c.deprecated is None
                                                      and orm_group not in c.groups))
 
-
+    def destroy(self):
+        pass
 
 

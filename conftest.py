@@ -76,7 +76,7 @@ def load_from_json(file):
 @pytest.fixture(scope="session")# создание подключения для всей сессии
 def db(request):
     db_config = load_config(request.config.getoption("--target"))['db']
-    dbfixture=Dbfixture(host=db_config['host'],name=db_config['name'],user=db_config['user'],password=db_config['password'])# создание объекта класса Dbfixture
+    dbfixture=ORMFixture(host=db_config['host'],name=db_config['name'],user=db_config['user'],password=db_config['password'])# создание объекта класса Dbfixture
     def fin():# вызов в конце сессии для закрытия соединения
         dbfixture.destroy()
     request.addfinalizer(fin)# после завершения тестов (или при аварийном завершении) будет вызвана автоматически для корректного закрытия бд
