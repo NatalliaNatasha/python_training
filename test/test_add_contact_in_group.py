@@ -3,7 +3,12 @@ import random
 
 
 
-def test_add_contact_in_group(app,db):
+def test_add_contact_in_group(app,db,json_groups):
+    group = json_groups
+    if len(db.get_group_list()) == 0:
+        app.helper_group.init_group_creation()
+        app.helper_group.fill_group_form(group)
+        app.helper_group.submit_group_creation()
     all_groups = db.get_group_list()
     group = random.choice(all_groups)
     group_id=group.id
