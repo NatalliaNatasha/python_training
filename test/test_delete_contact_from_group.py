@@ -3,7 +3,12 @@ import random
 
 
 
-def test_delete_contact_from_group(app,db):
+def test_delete_contact_from_group(app,db,json_groups):
+    group = json_groups
+    if len(db.get_group_list()) == 0:
+        app.helper_group.init_group_creation()
+        app.helper_group.fill_group_form(group)
+        app.helper_group.submit_group_creation()
     groups=db.get_group_list()
     group = random.choice(groups)
     group_id = group.id
