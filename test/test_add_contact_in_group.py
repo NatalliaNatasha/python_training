@@ -4,16 +4,13 @@ import random
 
 
 def test_add_contact_in_group(app,db,json_groups):
-    group = json_groups
     if len(db.get_group_list()) == 0:
         app.helper_group.init_group_creation()
-        app.helper_group.fill_group_form(group)
+        app.helper_group.fill_group_form(json_groups)
         app.helper_group.submit_group_creation()
     all_groups = db.get_group_list()
     group = random.choice(all_groups)
     group_id=group.id
-    contacts_before_adding = db.get_contacts_in_group(group)
-    old_contacts = db.get_contact_list()
     if len(db.get_contact_list()) == 0:
         app.helper_contact.create_contact(
             Contact(firstname="first", middlename="middle", lastname="last", nickname="user", title="new",
@@ -21,6 +18,8 @@ def test_add_contact_in_group(app,db,json_groups):
                     fax="7744", email="ffff@ddd.com", email2="ddddd@yy.com", email3="ddddq@tft.com",
                     page="page", byear="2010", ayear="2000", bday="1", bmonth="December", aday="1",
                     amonth="March"))
+    contacts_before_adding = db.get_contacts_in_group(group)
+    old_contacts = db.get_contact_list()
     contact = random.choice(old_contacts)
     contact_id = contact.id
     app.helper_contact.add_contact_in_group(contact_id,group_id)
