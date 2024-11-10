@@ -18,8 +18,9 @@ def test_add_contact_in_group(app,db,json_groups):
                     fax="7744", email="ffff@ddd.com", email2="ddddd@yy.com", email3="ddddq@tft.com",
                     page="page", byear="2010", ayear="2000", bday="1", bmonth="December", aday="1",
                     amonth="March"))
+        #получаем контакты из группы
     contacts_before_adding = db.get_contacts_in_group(group)
-    old_contacts = db.get_contact_list()
+    old_contacts = db.get_contacts_not_in_group(group)
     contact = random.choice(old_contacts)
     contact_id = contact.id
     app.helper_contact.add_contact_in_group(contact_id,group_id)
