@@ -238,6 +238,21 @@ class HelperContact:
         wd.find_element_by_xpath("//input[@type='submit'][@name='remove'][@value='Remove from \"%s\"']" % group_name).click()
         self.return_to_home_page()
 
+    def contact_not_in_group(self):
+        wd = self.app.wd
+        wd.find_element_by_xpath("//select[@name='group'][@onchange='this.parentNode.submit()']/option[@value='[none]']").click()
+        self.contact_cache = []
+        for e in wd.find_elements_by_css_selector("tr[name='entry']"):
+            td_value=e.find_element_by_xpath('./td[3]')
+            #td = td_value.text
+            id = e.find_element_by_name("selected[]").get_attribute("value")
+            self.contact_cache.append(Contact(id=id))
+            return list(self.contact_cache)
+
+
+
+
+
 
 
 
