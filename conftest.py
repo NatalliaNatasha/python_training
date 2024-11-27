@@ -1,4 +1,5 @@
 from model.group import Group
+import shutil
 import json
 import pytest
 from fixture.application import Application
@@ -24,6 +25,7 @@ def load_config(file):
 
 @pytest.fixture
 def app(request):
+    print(shutil.which("geckodriver.exe"))
     global fixture
     browser = request.config.getoption("--browser")
     web_config=load_config(request.config.getoption("--target"))['web']
