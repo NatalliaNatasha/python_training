@@ -1,12 +1,11 @@
 import random
 import shutil
 from model.group import Group
-import logging
 
-logging.basicConfig(level=logging.INFO)
+
+
 
 def test_delete_some_group(app,db,check_ui):
-    logging.info("Path to geckodriver: %s", shutil.which("geckodriver.exe"))
     print(shutil.which("geckodriver.exe"))
     if len(db.get_group_list()) ==0:
         app.helper_group.init_group_creation()
