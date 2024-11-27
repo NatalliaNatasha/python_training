@@ -2,13 +2,12 @@ from selenium import webdriver
 from fixture.session import SessionHelper
 from fixture.helper_group import HelperGroup
 from fixture.helper_contact import HelperContact
-import shutil
+
 
 class Application:
-    print(shutil.which("geckodriver.exe"))
     def __init__(self,browser,baseUrl):
-        if browser=="firefox":
-            self.wd = webdriver.Firefox()
+        if browser == "firefox":
+            self.wd = webdriver.Firefox(executable_path='C:\\windows\\system32\\geckodriver.exe')
         elif browser=="chrome":
             self.wd = webdriver.Chrome()
         elif browser=="ie":
