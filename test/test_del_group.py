@@ -1,5 +1,5 @@
-import random
 import shutil
+import random
 from model.group import Group
 
 
