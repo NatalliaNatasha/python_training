@@ -1,8 +1,9 @@
 import random
-
+import shutil
 from model.group import Group
 from random import randrange
 def test_delete_some_group(app,db,check_ui):
+    print(shutil.which("geckodriver.exe"))
     if len(db.get_group_list()) ==0:
         app.helper_group.init_group_creation()
         app.helper_group.fill_group_form(Group(name="ggg", header="new header", footer="new footer"))
