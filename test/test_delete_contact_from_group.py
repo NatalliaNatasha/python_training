@@ -26,5 +26,5 @@ def test_delete_contact_from_group(app,db,json_groups):
     new_contacts_in_group = db.get_contacts_in_group(group)
     assert len(old_contacts_in_group) - 1 == len(new_contacts_in_group)
     result=db.get_contacts_not_in_group(group)
-    print(result)
+
 
